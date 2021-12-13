@@ -269,6 +269,6 @@ ip-172-31-21-34    Ready    worker2   3m23s   v1.20.5
 To Verify Pod namespaces
 
 ```bash
-sudo kubectl get pods --all-namespaces
+kubectl get pods --all-namespaces
 ```
 
