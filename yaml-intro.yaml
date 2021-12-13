@@ -1,0 +1,48 @@
+# key-value pair
+name: loic
+function: admin
+
+# List/Array 
+Fruits:
+- Tomato
+- Apple
+- Cherry
+- Pineapple
+
+# second representation for lists
+Fruits1: ["Tomato", "Apple", "Cherry", "Pineapple"]
+
+
+# Dictionnary
+Junior:
+  salary: 35k
+  experience: 2
+Senior:
+      salary: 50
+      experience: 7
+
+# List / Dictionnary 
+Fruits2:
+- Banana:
+    calories: 100
+    taste: sweet
+
+- Strawberry:
+    calories: 150
+    taste: sour
+
+#short description
+short_desc: >
+Here is a short 
+description that will be in one line
+
+#long description
+long_desc: |
+now this bloc is formatted
+to be displayed on two lines
+
+
+
+  
+
+
