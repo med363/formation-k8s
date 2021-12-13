@@ -139,7 +139,7 @@ echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https:/
 sudo apt-get update
 ```
 
-###4. Install Kubeadm,Kubelet and Kubectl on All Node
+### 4. Install Kubeadm,Kubelet and Kubectl on All Node
 - Install kubeadm,kubelet and kubectl using below command.
 
 ```bash
@@ -151,7 +151,7 @@ sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 ```
 
-###5. Initialize the Master node using kubeadm (on Master Node)
+### 5. Initialize the Master node using kubeadm (on Master Node)
 - Next initialize the master node using kubeadm.
 
 ```bash
@@ -200,7 +200,7 @@ To check master node status
 ```bash
 kubectl get nodes
 ```
-###6. Configure Pod Network and Verify Pod namespaces
+### 6. Configure Pod Network and Verify Pod namespaces
 - Install the Weave network plugin to communicate master and worker nodes.
 
 ```bash
@@ -226,7 +226,7 @@ Check node status
 ```bash
 kubectl get nodes
 ```
-###7. Join Worker Node to the Cluster
+### 7. Join Worker Node to the Cluster
 Next Join two worker nodes to master.
 
 ```bash
