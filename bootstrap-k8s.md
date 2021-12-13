@@ -20,7 +20,7 @@ sudo hostnamectl set-hostname "node1"
 sudo hostnamectl set-hostname "node2"
 ```
 
-####Disable swap
+#### Disable swap
 
 ```bash
 swapoff -a
