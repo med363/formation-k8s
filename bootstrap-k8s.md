@@ -200,7 +200,7 @@ To check master node status
 ```bash
 kubectl get nodes
 ```
-### 6. Configure Pod Network and Verify Pod namespaces
+### 6. Configure Pod Network and Verify Pod namespaces (on Master Node)
 - Install the Weave network plugin to communicate master and worker nodes.
 
 ```bash
@@ -226,7 +226,7 @@ Check node status
 ```bash
 kubectl get nodes
 ```
-### 7. Join Worker Node to the Cluster
+### 7. Join Worker Node to the Cluster (on all worker Node)
 Next Join two worker nodes to master.
 
 ```bash
