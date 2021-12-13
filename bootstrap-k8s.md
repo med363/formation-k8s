@@ -227,7 +227,7 @@ Check node status
 kubectl get nodes
 ```
 ### 7. Join Worker Node to the Cluster (on all worker Node)
-Next Join two worker nodes to master.
+Next Join two worker nodes to master (adopt this command to your environment) .
 
 ```bash
 sudo kubeadm join 172.31.6.177:6443 --token vr5rat.seyprj6jvw4xy43m --discovery-token-ca-cert-hash sha256:4c9b53eb03744b4cf21c5bdacd712024eb09030561714cc5545838482c8017b3
@@ -241,6 +241,13 @@ This node has joined the cluster:
 
 Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
 ```
+
+In case you forgot to copy the join command 
+
+```bash
+kubeadm token create --print-join-command
+```
+
 Check the All node status
 
 ```bash
