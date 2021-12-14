@@ -41,6 +41,16 @@ long_desc: |
 now this bloc is formatted
 to be displayed on two lines
 
+#add separator (---)
+short_desc: >
+Here is a short 
+description that will be in one line
+---
+long_desc: |
+now this bloc is formatted
+to be displayed on two lines
+
+
 
 
   
