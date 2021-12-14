@@ -1,6 +1,7 @@
 ### LAB9 (Drain // uncordon) 
 >  use the official documentation in case you need it
 
+- Remote all taint (if there's any) on all worker nodes.
 - Create a deployment based on nginx, it shoudl have 12 replicas, name it my-deployment
 
 For maintenance purpose, we need to upgrade some critical packages on the worker node1 and node2.
