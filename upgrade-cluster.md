@@ -10,15 +10,15 @@ apt-cache madison kubeadm
 ```
 - Install the desired version
 ```bash
-apt-get upgrade -y kubeadm=1.23.0-00
+sudo apt-get upgrade -y kubeadm=1.23.0-00
 ```
 - execute the plan
 ```bash
-kubeadm upgrade plan
+sudo kubeadm upgrade plan
 ```
-- update the kubelet and restart it
+- Restart the kubelet
 ```bash
-sudo apt-get upgrade -y kubelet=1.23.0-00
+sudo systemctl daemon-reload
 sudo systemctl restart kubelet
 ```
 - check that the version is updated
