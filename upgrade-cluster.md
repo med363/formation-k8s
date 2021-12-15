@@ -37,14 +37,15 @@ kubectl drain node1
 ```bash
 sudo apt-get upgrade -y kubeadm=1.23.0-00
 ```
-- update the kubelet and restart it
+- Restart the kubelet
 ```bash
-sudo apt-get upgrade -y kubelet=1.23.0-00
+sudo systemctl daemon-reload
 sudo systemctl restart kubelet
 ```
+
 - upgrade the node 
 ```bash
-sudo kubeadm upgrade node config --kubelet-version v1.23.0
+sudo kubeadm upgrade node config
 ```
 - Uncordon the node 
 ```bash
