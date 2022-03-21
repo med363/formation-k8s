@@ -271,4 +271,150 @@ To Verify Pod namespaces
 ```bash
 kubectl get pods --all-namespaces
 ```
+### exple of deployement server web
+### Create pod without Manifestfile
+```bash
+kubectl run nginx --image nginx
+```
+### Show inf about pod
+```bash
+kubectl describe po nginx
+```
+### delete pod 
+```bash
+kubectl delete po nginx
+```
 
+### 1.Create Pod ==> Pod contain 1-n containers
+### Manifest files ==>  my-pod.yml
+```bash
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    type: webserver
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx:latest
+```
+### Apply this file my-pod.yml
+```bash
+kubectl apply -f my-pod.yml
+```
+### Show Pod
+```bash
+kubectl get po
+```
+
+### 2.Creat replicaset object rs.yml
+```bash 
+#4 elts principale apiVersion ,kind(pod [[restart auto ]], Replicaset[[si node down replicat auto sur une autre node]],Deploiment[[]]),metadata[[dictionaire ]],spec[[specification:template of containers]]
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: my-replicatset
+  labels:
+    type: rs
+spec:
+  replicas: 7
+  template:
+    metadata:
+      name: my-pod
+      labels:
+        type: webserver
+    spec:
+        containers:
+        - name: nginx-container
+          image: nginx:latest
+#gere les objet nouvellement cree 
+  selector:
+    matchLabels:
+      type: webserver 
+```
+### Apply file
+```bash
+kubectl apply -f rs.yml
+```
+### Master node echo for 5 min hertbit of other node 
+### add replicat without Manifestfile
+```bash
+kubectl scale --replicat=22 replicaset
+```
+### scale down
+```bash
+kubectl scale --replicat=4 replicaset
+```
+### delete replicaset to do deployement objet
+```bash
+kubectl delete replicaset my-replicatset
+```
+
+### defference between deployement and replicat that with deployement can do update and rollback
+### 3.Create Deployment object
+```bash
+#4 elts principale apiVersion ,kind(pod [[restart auto ]], Replicaset[[si node down replicat auto sur une autre node]],Deploiment[[]]),metadata[[dictionaire ]],spec[[specification:template of containers]]
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+  labels:
+    type: rs
+spec:
+  replicas: 7
+  template:
+    metadata:
+      name: my-pod
+      labels:
+        type: webserver
+    spec:
+        containers:
+        - name: nginx-container
+          image: nginx:latest
+#gere les objet nouvellement cree 
+  selector:
+    matchLabels:
+      type: webserver 
+```
+### Apply this file deploy.yml
+```bash
+kubectl apply -f deploy.yml
+```
+### show all pod and wich node created
+```bash
+kubectl get po -o wide
+```
+### or
+```bash
+kubectl get po -o wide --show-labels
+```
+
+### 6.create service that pod be accesible outside there are three svcs (clusteIP,loadbalancer,NodePort)
+### create nodeport svc nodeport.yml
+```bash 
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  type: NodePort
+  ports:
+#port of container inside pod
+  - targetPort: 80
+#port de service prend flux 3000 redirection vers port du pod
+    port: 80
+#port phy 3ibaratan map 3000 redirger vers port du service 80
+    nodePort: 30000
+#ya3ref les pods ili na7ki a3lihom ->label pod
+  selector:
+    type: webserver
+```
+### Apply svc
+```bash
+kubectl apply -f nodeport.yml
+```
+### show svc
+```bash
+kubectl get svc
+```
