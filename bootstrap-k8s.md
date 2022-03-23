@@ -418,3 +418,7 @@ kubectl apply -f nodeport.yml
 ```bash
 kubectl get svc
 ```
+### show all
+```bash
+kubectl get all
+```
