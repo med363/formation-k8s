@@ -340,11 +340,11 @@ kubectl apply -f rs.yml
 ### Master node echo for 5 min hertbit of other node 
 ### add replicat without Manifestfile
 ```bash
-kubectl scale --replicat=22 replicaset
+kubectl scale --replicas=22 -f <file of replicaset>
 ```
 ### scale down
 ```bash
-kubectl scale --replicat=4 replicaset
+kubectl scale --replicas=4 -f <file of replicaset> 
 ```
 ### delete replicaset to do deployement objet
 ```bash
