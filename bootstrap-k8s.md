@@ -422,3 +422,73 @@ kubectl get svc
 ```bash
 kubectl get all
 ```
+
+### show containers run on backend
+```bash
+kubectl get daemonsets -n kube-system
+```
+### show health of cluster k8s
+```bash
+kubectl get componentstatuses
+```
+
+### -------------------------------------------------------rolling update ---------------------------------------------------------------------
+### upgrade nginx to 1.17
+### manifest file 
+```bash
+#4 elts principale apiVersion ,kind(pod [[restart auto ]], Replicaset[[si node down replicat auto sur une autre node]],Deploiment[[]]),metadata[[dictionaire ]],spec[[specification:template of containers]]
+# hw does know how to should manage pods and replicaset->labels
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  
+#manage pod on enviroment test
+  labels:
+    environment: testdeploy
+  name: testdeploy
+spec:
+  replicas: 3
+#gere les objet nouvellement cree 
+  selector:
+#this label manage replicatset
+    matchLabels:
+      environment: test 
+#how i upgrade my pod 1.16->1.17 if 1.17 tymchy labes mb3ad 10s nifsa5 one f old pod 1.16 then another pd will came with 1.17
+  minReadySeconds: 10
+  strategy: 
+    rollingUpdate:
+#new 1 pd with version 1.17((4 copy of the pod one of them 1.17))
+     maxSurge: 1
+# honi n9oli lazem hata pod ty5dim il kol lazem ye5dmo 3-0 =3 idha khalit maxUnivalable=1 => pod mata5dimch may9ala9ch 3-1=2
+     maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+#manage pod on enviroment test
+      labels:
+        environment: test
+    spec:
+        containers:
+        - image: nginx:1.17
+          name: nginx
+```
+
+### nodeport service
+```bash
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  type: NodePort
+  ports:
+#port of container inside pod
+  - targetPort: 80
+#port de service prend flux 3000 redirection vers port du pod
+    port: 80
+#port phy 3ibaratan map 3000 redirger vers port du service 80
+    nodePort: 3000
+#ya3ref les pods ili na7ki a3lihom ->label pod
+  selector:
+    environment: test
+```
