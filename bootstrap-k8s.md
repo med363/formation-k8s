@@ -299,6 +299,25 @@ spec:
   - name: nginx-container
     image: nginx:latest
 ```
+### other exple pod with multi-container
+```bash
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis-django
+  labels:
+    app: web
+spec:
+  containers:
+    - name: key-value-store
+      image: redis
+      ports:
+        - containerPort: 6379
+    - name: frontend
+      image: django
+      ports:
+        - containerPort: 8000
+```
 ### Apply this file my-pod.yml
 ```bash
 kubectl apply -f my-pod.yml
