@@ -1,0 +1,117 @@
+if we run : k get no and show this erreur "the connection to the server controlplane:6433 was refused - did you specify the right host or port?" then we neet to restart kubelet:
+cat .kube/config | grep control and chand change Cluster: Server Port = '6443' (controleplane):vi .kube/config and then restart kubelet:systemctl restart kubelet ,issue still then show log of pod => cd /var/log/pods ==> ls -ltr (output)=> show apiserver log ==> cat (output)/api-server/7.log and then verifie k8s pki => ls -l /etc/kubernetes/pki/ ==> cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep crt ==> modifie (sudo nano /etc/kubernetes/manifests/kube-apiserver.yaml ) =>   change to  - --client-ca-file=/etc/kubernetes/pki/ca.crt ==> restart kubelet (systemctl restart kubelet) ==> sho nodes(k get no)=> show pods in all cluster(k get pods -A)
+if pod not running put namz of pod=> k describe pod coredns-5787c6fbfc-frqgj -n kube--system => i show failed to pull image => i copie name of image that mention=>k set image deployment/coredns -n kube-system coredns=registry.k8s.io/coredns/coredns:v1.8.6 => k get po (correct)==>
+k get noNAME           STATUS                     ROLES           AGE    VERSION
+controlplane   Ready                      control-plane   131m   v1.27.0
+node01         Ready,SchedulingDisabled   <none>          131m   v1.27.0
+
+controlplane /var/log/pods ➜  k uncordon node01
+node/node01 uncordoned
+
+controlplane /var/log/pods ➜  k get no
+NAME           STATUS   ROLES           AGE    VERSION
+controlplane   Ready    control-plane   132m   v1.27.0
+node01         Ready    <none>          131m   v1.27.0
+
+---
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+    name: data-pv
+spec:
+   accessModes: ["ReadWriteMany"]
+   capacity:
+    storage: 1Gi
+   hostPath:
+      path: /web
+      type: DirectoryOrCreate
+
+---
+
+controlplane ~ ✖ k apply -f devops/kubernetes-challenges/challenge-2/fileserver-pv.yaml
+persistentvolume/data-pv created
+---
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+    name: data-pvc
+spec:
+   accessModes: ["ReadWriteMany"]
+   resources:
+    requests:
+       storage: 1Gi
+   volumeName: data-pv
+
+---
+
+controlplane ~ ➜  k apply -f devops/kubernetes-challenges/challenge-2/fileserver-pvc.yaml 
+persistentvolumeclaim/data-pvc created
+---
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: gop-fileserver
+  name: gop-fileserver
+spec:
+  volumes:
+  - name: data-store
+    persistentVolumeClaim:
+      claimName: data-pvc
+  containers:
+  - image: kodekloud/fileserver
+    imagePullPolicy: IfNotPresent
+    name: gop-fileserver
+    volumeMounts:
+       - name: data-store
+         mountPath: /web
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+
+
+
+---
+controlplane ~ ➜  k apply -f devops/kubernetes-challenges/challenge-2/fileserver-pod.yaml 
+pod/gop-fileserver created
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: gop-fs-service
+  name: gop-fs-service
+spec:
+  ports:
+  - name: 8080-8080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+    nodePort: 31200
+  selector:
+    run: gop-fileserver
+  type: NodePort
+  
+  
+---
+
+controlplane ~ ➜  k apply -f devops/kubernetes-challenges/challenge-2/fileserver-svc.yaml 
+service/gop-fs-service created
+
+controlplane ~ ➜  k get pv
+NAME      CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM              STORAGECLASS   REASON   AGE
+data-pv   1Gi        RWX            Retain           Bound    default/data-pvc                           2m8s
+
+controlplane ~ ➜  k get all
+NAME                 READY   STATUS    RESTARTS   AGE
+pod/gop-fileserver   1/1     Running   0          87s
+
+NAME                     TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+service/gop-fs-service   NodePort    10.108.149.228   <none>        8080:31200/TCP   70s
+service/kubernetes       ClusterIP   10.96.0.1        <none>        443/TCP          139m
+--

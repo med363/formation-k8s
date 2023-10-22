@@ -1,0 +1,69 @@
+pvc:
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jekyll-site
+  namespace: development
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: local-storage
+  resources:
+    requests:
+      storage: 1Gi
+---
+pod:
+---
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: development
+  name: jekyll
+  labels:
+    run: jekyll
+spec: 
+  containers:
+  - name: jekyll
+    image: kodekloud/jekyll-serve
+    volumeMounts:
+    - mountPath: /site
+      name: site  
+  initContainers:
+  - name: copy-jekyll-site
+    image: kodekloud/jekyll
+    command: [ "jekyll", "new", "/site" ]
+    volumeMounts:
+    - mountPath: /site
+      name: site
+  volumes:
+  - name: site
+    persistentVolumeClaim:
+      claimName: jekyll-site
+    
+---
+srv:
+---
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: development
+  name: jekyll
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 4000
+      nodePort: 30097
+  selector:
+    run: jekyll
+
+---
+create role: k create role developer-role --resource=pods,svc,pvc --verb="*" -n development
+create rolebinding: k create rolebinding developer-rolebinding --role=developer-role --user="martin" -n development
+config user credentials:k config set-credentials  martin --client-certificate ./martin.crt --client-key ./martin.key       
+config user context : k config set-context developer --cluster kubernetes --user martin
+kube-config:k config use-context developer
+validate the access:k get all -n development && k get pvc -n development && k get pod -n development  
