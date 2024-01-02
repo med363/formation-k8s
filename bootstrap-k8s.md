@@ -342,109 +342,127 @@ kubectl scale deployment <deployment_name> --replicas=<replica_count>
 ```bash
 kubectl rollout restart deployment <deployment_name>
 ```
-12. Exposing a deployment as a service: 
-kubectl expose deployment <deployment_name> --port=<port> 
-13. Run a one-time command in a pod: 
-kubectl exec -it <pod_name> -- <command> 
-Services: 
-14. Create a service: 
+12. Exposing a deployment as a service:
+```bash
+kubectl expose deployment <deployment_name> --port=<port>
+```
+14. Run a one-time command in a pod:
+```bash
+kubectl exec -it <pod_name> -- <command>
+```
+## Services: 
+16. Create a service:
+```bash
 kubectl create service <service_type> <service_name> -
-tcp=<port>:<target_port> 
-15. Expose a deployment using a service: 
+tcp=<port>:<target_port>
+```
+18. Expose a deployment using a service:
+```bash 
 kubectl expose deployment <deployment_name> --type=<service_type> -
-port=<port> 
-16. Describe a service: 
-kubectl describe service <service_name> 
-17. Delete a service: 
-kubectl delete service <service_name> 
-Configurations: 
-18. View ConfigMap details: 
-kubectl get configmap <configmap_name> 
-19. Create a ConfigMap from file: 
-kubectl create configmap <configmap_name> --from-file=<path/to/files> 
-20. View Secret details: 
-kubectl get secret <secret_name> 
-21. Create a Secret from literal values: 
+port=<port>
+``` 
+20. Describe a service:
+```bash
+kubectl describe service <service_name>
+```
+22. Delete a service:
+```bash
+kubectl delete service <service_name>
+````
+## Configurations: 
+24. View ConfigMap details:
+```bash
+kubectl get configmap <configmap_name>
+```
+26. Create a ConfigMap from file:
+```bash
+kubectl create configmap <configmap_name> --from-file=<path/to/files>
+```
+28. View Secret details:
+```bash
+kubectl get secret <secret_name>
+```
+30. Create a Secret from literal values: 
 kubectl create secret generic <secret_name> --from-literal=key1=value1 -
 from-literal=key2=value2 
 Networking: 
-22. Get information about services and their endpoints: 
+31. Get information about services and their endpoints: 
 kubectl get svc 
-23. Create an Ingress resource: 
+32. Create an Ingress resource: 
 kubectl apply -f ingress.yaml 
-24. View Ingress details: 
+33. View Ingress details: 
 kubectl get ingress 
-25. Network policy details: 
+34. Network policy details: 
 kubectl get networkpolicies 
-26. Enable or disable resource access for a pod: 
+35. Enable or disable resource access for a pod: 
 kubectl apply -f network-policy.yaml 
 Storage: 
-27. View Persistent Volumes (PVs): 
+36. View Persistent Volumes (PVs): 
 kubectl get pv 
-28. View Persistent Volume Claims (PVCs): 
+37. View Persistent Volume Claims (PVCs): 
 kubectl get pvc 
-29. Create a Persistent Volume Claim: 
+38. Create a Persistent Volume Claim: 
 kubectl apply -f persistent-volume-claim.yaml 
 Scaling and Autoscaling: 
-30. Autoscale a deployment: 
+39. Autoscale a deployment: 
 kubectl autoscale deployment <deployment_name> --min=<min_replicas> -
 max=<max_replicas> --cpu-percent=<cpu_percent> 
-31. View horizontal pod autoscaler details: 
+40. View horizontal pod autoscaler details: 
 kubectl get hpa 
-32. Manually trigger horizontal pod autoscaler: 
+41. Manually trigger horizontal pod autoscaler: 
 kubectl scale deployment <deployment_name> --replicas=<new_replica_count> 
 StatefulSets: 
-33. Create a StatefulSet: 
+42. Create a StatefulSet: 
 kubectl apply -f statefulset.yaml 
-34. Scale a StatefulSet: 
+43. Scale a StatefulSet: 
 kubectl scale statefulset <statefulset_name> --replicas=<replica_count> 
-35. Delete a StatefulSet and associated pods: 
+44. Delete a StatefulSet and associated pods: 
 kubectl delete statefulset <statefulset_name> 
 Debugging and Troubleshooting: 
-36. Run a debug container in a pod: 
+45. Run a debug container in a pod: 
 kubectl debug <pod_name> -it --image=<debug_image> 
-37. Get events in the cluster: 
+46. Get events in the cluster: 
 kubectl get events 
-38. Check pod resource usage: 
+47. Check pod resource usage: 
 kubectl top pod 
 Security: 
-39. View pod security policies: 
+48. View pod security policies: 
 kubectl get psp 
-40. View pod security context: 
+49. View pod security context: 
 kubectl get pods --output=jsonpath='{range 
 .items[*]}{"\n"}{.metadata.name}{":"}{.spec.securityContext.runAsUser}{end}
  ' 
-41. Create a service account: 
+50. Create a service account: 
 kubectl create serviceaccount <serviceaccount_name> 
 Namespaces: 
-42. List all namespaces: 
+51. List all namespaces: 
 kubectl get namespaces 
-43. Switch to a different namespace: 
+52. Switch to a different namespace: 
 kubectl config set-context --current --namespace=<namespace_name> 
-44. Create a namespace: 
+53. Create a namespace: 
 kubectl create namespace <namespace_name> 
 Helm (Kubernetes Package Manager): 
-45. Install a Helm chart: 
+54. Install a Helm chart: 
 helm install <release_name> <chart_name> 
-46. List Helm releases: 
+55. List Helm releases: 
 helm list 
-47. Upgrade a Helm release: 
+56. Upgrade a Helm release: 
 helm upgrade <release_name> <chart_name> 
 Monitoring and Logging: 
-48. View pod logs with timestamps: 
+57. View pod logs with timestamps: 
 kubectl logs <pod_name> --timestamps 
-49. Enable metrics server (for resource usage metrics): 
+58. Enable metrics server (for resource usage metrics): 
 kubectl apply -f https://github.com/kubernetes-sigs/metrics
 server/releases/latest/download/components.yaml 
-50. View resource usage metrics for nodes: 
+59. View resource usage metrics for nodes: 
 kubectl top nodes 
-51. View resource usage metrics for pods: 
+60. View resource usage metrics for pods: 
 kubectl top pods 
 Clean Up: 
-52. Delete a resource: 
-53. kubectl delete <resource_type> <resource_name> 
-54.  
-55. Delete all resources in a namespace: 
+61. Delete a resource: 
+62. kubectl delete <resource_type> <resource_name> 
+63.  
+64. Delete all resources in a namespace: 
 kubectl delete all --all -n <namespace> 
 Errors in K8 & how to troubleshoot them 
 Kubernetes, like any complex system, can encounter various errors and issues during 
