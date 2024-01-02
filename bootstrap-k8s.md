@@ -382,89 +382,154 @@ kubectl create configmap <configmap_name> --from-file=<path/to/files>
 ```bash
 kubectl get secret <secret_name>
 ```
-30. Create a Secret from literal values: 
+30. Create a Secret from literal values:
+```bash
 kubectl create secret generic <secret_name> --from-literal=key1=value1 -
-from-literal=key2=value2 
-Networking: 
-31. Get information about services and their endpoints: 
-kubectl get svc 
-32. Create an Ingress resource: 
-kubectl apply -f ingress.yaml 
-33. View Ingress details: 
-kubectl get ingress 
-34. Network policy details: 
-kubectl get networkpolicies 
-35. Enable or disable resource access for a pod: 
-kubectl apply -f network-policy.yaml 
-Storage: 
-36. View Persistent Volumes (PVs): 
-kubectl get pv 
-37. View Persistent Volume Claims (PVCs): 
-kubectl get pvc 
-38. Create a Persistent Volume Claim: 
-kubectl apply -f persistent-volume-claim.yaml 
-Scaling and Autoscaling: 
-39. Autoscale a deployment: 
+from-literal=key2=value2
+```
+## Networking: 
+32. Get information about services and their endpoints:
+```bash
+kubectl get svc
+```
+34. Create an Ingress resource:
+```bash
+kubectl apply -f ingress.yaml
+```
+36. View Ingress details:
+```bash
+kubectl get ingress
+```
+38. Network policy details:
+```bash
+kubectl get networkpolicies
+``` 
+40. Enable or disable resource access for a pod:
+```bash
+kubectl apply -f network-policy.yaml
+```
+## Storage: 
+42. View Persistent Volumes (PVs):
+```bash
+kubectl get pv
+```
+44. View Persistent Volume Claims (PVCs):
+```bash 
+kubectl get pvc
+```
+46. Create a Persistent Volume Claim:
+```bash
+kubectl apply -f persistent-volume-claim.yaml
+```
+## Scaling and Autoscaling: 
+48. Autoscale a deployment:
+```bash
 kubectl autoscale deployment <deployment_name> --min=<min_replicas> -
-max=<max_replicas> --cpu-percent=<cpu_percent> 
-40. View horizontal pod autoscaler details: 
-kubectl get hpa 
-41. Manually trigger horizontal pod autoscaler: 
-kubectl scale deployment <deployment_name> --replicas=<new_replica_count> 
-StatefulSets: 
-42. Create a StatefulSet: 
-kubectl apply -f statefulset.yaml 
-43. Scale a StatefulSet: 
-kubectl scale statefulset <statefulset_name> --replicas=<replica_count> 
-44. Delete a StatefulSet and associated pods: 
-kubectl delete statefulset <statefulset_name> 
-Debugging and Troubleshooting: 
-45. Run a debug container in a pod: 
-kubectl debug <pod_name> -it --image=<debug_image> 
-46. Get events in the cluster: 
-kubectl get events 
-47. Check pod resource usage: 
-kubectl top pod 
-Security: 
-48. View pod security policies: 
-kubectl get psp 
-49. View pod security context: 
+max=<max_replicas> --cpu-percent=<cpu_percent>
+```
+50. View horizontal pod autoscaler details:
+```bash
+kubectl get hpa
+```
+52. Manually trigger horizontal pod autoscaler:
+```bash
+kubectl scale deployment <deployment_name> --replicas=<new_replica_count>
+```
+## StatefulSets: 
+54. Create a StatefulSet:
+```bash
+kubectl apply -f statefulset.yaml
+```
+56. Scale a StatefulSet:
+```bash
+kubectl scale statefulset <statefulset_name> --replicas=<replica_count>
+```
+58. Delete a StatefulSet and associated pods:
+```bash
+kubectl delete statefulset <statefulset_name>
+```
+## Debugging and Troubleshooting: 
+60. Run a debug container in a pod:
+```bash
+kubectl debug <pod_name> -it --image=<debug_image>
+``` 
+62. Get events in the cluster:
+```bash
+kubectl get events
+```
+64. Check pod resource usage:
+```bash
+kubectl top pod
+```
+## Security: 
+66. View pod security policies:
+```bash
+kubectl get psp
+```
+68. View pod security context:
+```bash
 kubectl get pods --output=jsonpath='{range 
 .items[*]}{"\n"}{.metadata.name}{":"}{.spec.securityContext.runAsUser}{end}
- ' 
-50. Create a service account: 
-kubectl create serviceaccount <serviceaccount_name> 
-Namespaces: 
-51. List all namespaces: 
-kubectl get namespaces 
-52. Switch to a different namespace: 
-kubectl config set-context --current --namespace=<namespace_name> 
-53. Create a namespace: 
-kubectl create namespace <namespace_name> 
-Helm (Kubernetes Package Manager): 
-54. Install a Helm chart: 
-helm install <release_name> <chart_name> 
-55. List Helm releases: 
-helm list 
-56. Upgrade a Helm release: 
-helm upgrade <release_name> <chart_name> 
-Monitoring and Logging: 
-57. View pod logs with timestamps: 
-kubectl logs <pod_name> --timestamps 
-58. Enable metrics server (for resource usage metrics): 
+ '
+```
+70. Create a service account:
+```bash
+kubectl create serviceaccount <serviceaccount_name>
+```
+## Namespaces: 
+72. List all namespaces:
+```bash
+kubectl get namespaces
+``` 
+74. Switch to a different namespace:
+```bash 
+kubectl config set-context --current --namespace=<namespace_name>
+``` 
+76. Create a namespace:
+```bash 
+kubectl create namespace <namespace_name>
+``` 
+## Helm (Kubernetes Package Manager): 
+78. Install a Helm chart:
+```bash 
+helm install <release_name> <chart_name>
+``` 
+80. List Helm releases:
+```bash
+helm list
+``` 
+82. Upgrade a Helm release:
+```bash 
+helm upgrade <release_name> <chart_name>
+``` 
+## Monitoring and Logging: 
+84. View pod logs with timestamps:
+```bash 
+kubectl logs <pod_name> --timestamps
+``` 
+86. Enable metrics server (for resource usage metrics):
+```bash 
 kubectl apply -f https://github.com/kubernetes-sigs/metrics
-server/releases/latest/download/components.yaml 
-59. View resource usage metrics for nodes: 
-kubectl top nodes 
-60. View resource usage metrics for pods: 
-kubectl top pods 
-Clean Up: 
-61. Delete a resource: 
-62. kubectl delete <resource_type> <resource_name> 
-63.  
-64. Delete all resources in a namespace: 
-kubectl delete all --all -n <namespace> 
-Errors in K8 & how to troubleshoot them 
+server/releases/latest/download/components.yaml
+```
+88. View resource usage metrics for nodes:
+```bash 
+kubectl top nodes
+``` 
+90. View resource usage metrics for pods:
+```bash 
+kubectl top pods
+```
+## Clean Up: 
+92. Delete a resource:
+```bash 
+kubectl delete <resource_type> <resource_name>
+```   
+95. Delete all resources in a namespace:
+```bash 
+kubectl delete all --all -n <namespace>
+``` 
+## Errors in K8 & how to troubleshoot them 
 Kubernetes, like any complex system, can encounter various errors and issues during 
 setup, configuration, and runtime. Here are 20 common errors in Kubernetes and 
 ways to troubleshoot them: 
