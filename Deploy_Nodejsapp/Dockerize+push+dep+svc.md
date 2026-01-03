@@ -47,7 +47,7 @@ kubectl expose deployment k8s-node --type=NodePort --port=3000
 ```bash
 kubectl get svc
 ```
-
+##
 
 
 
