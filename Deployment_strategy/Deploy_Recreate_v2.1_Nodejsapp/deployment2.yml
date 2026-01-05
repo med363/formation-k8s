@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recreate-deployment
+  labels:
+    app: hellosvc
+spec:
+  replicas: 8
+  selector:
+    matchLabels:
+      app: hellosvc
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: hellosvc
+    spec:
+      containers:
+      - name: hellosvc
+        image: mohamedamineblibech/node:v2.0
+        ports:
+        - containerPort: 3000
