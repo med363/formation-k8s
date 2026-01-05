@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-helper-pod
+spec:
+  restartPolicy: Never
+  volumes:
+  - name: shared-data
+    # will create an empty directory for sharing data between containers first that pod is createdd 
+    emptyDir: {}
+  containers:
+  - name: nginx-container
+    image: nginx:latest
+    volumeMounts:
+    - name: shared-data
+      mountPath: /usr/share/nginx/html
+  - name: helper-container
+    image: ubuntu:latest
+    command: ["/bin/sh", "-c", "echo 'Hello from helper container!' > /data/index.html && sleep 3600"]
+    volumeMounts:
+    - name: shared-data
+      mountPath: /data
