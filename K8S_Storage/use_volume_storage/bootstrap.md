@@ -50,8 +50,8 @@ kubectl exec -it .. -c ubbuntu -- ls /ubuntu1
 kubect exec -t .. -c ubuntu1 -- touch /ubuntu1/amine
 ```
 ```bash
-kubectl exec -it .. -c ubbuntu1 -- ls /ubuntu1
+kubectl exec -it .. -c ubuntu1 -- ls /ubuntu1
 ```
 ```bash
-kubectl exec -it .. -c ubbuntu2 -- ls /ubuntu2
+kubectl exec -it .. -c ubuntu2 -- ls /ubuntu2
 ```
