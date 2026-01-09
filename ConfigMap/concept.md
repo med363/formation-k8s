@@ -1,0 +1,1 @@
+# lets you store configuration for other objects to use. they accept key-value pairs as their values. ConfigMaps are designed to store config parameters and inject them into running pods. such ip @ , db server , url of a proxy service
